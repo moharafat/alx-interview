@@ -3,6 +3,7 @@
 0-Pascal triangle
 """
 
+
 def pascal_triangle(n):
     """
     Returns the first n rows of Pascal's triangle.
