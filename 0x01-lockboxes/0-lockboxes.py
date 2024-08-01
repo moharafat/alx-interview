@@ -1,5 +1,8 @@
 #!/usr/bin/python3
+"""Unlock boxes"""
+
 def canUnlockAll(boxes):
+    """Determine if all the boxes can be opened"""
     # Initialize variables
     n = len(boxes)
     unlocked = [False] * n
