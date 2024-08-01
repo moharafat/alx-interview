@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """Unlock boxes"""
 
+
 def canUnlockAll(boxes):
     """Determine if all the boxes can be opened"""
     # Initialize variables
@@ -16,4 +17,5 @@ def canUnlockAll(boxes):
             unlocked[key] = True  # Mark the box as unlocked
             queue.extend(boxes[key])  # Add new keys to the queue
 
-    return all(unlocked)  # Return True if all boxes are unlocked, otherwise False
+    return all(unlocked)
+    # Return True if all boxes are unlocked, otherwise False
