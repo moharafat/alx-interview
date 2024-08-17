@@ -1,42 +1,36 @@
 #!/usr/bin/python3
-"""Log parsing """
+""" script that reads stdin line by line and computes metrics:
+"""
+from sys import stdin
 
-import sys
-import re
+codes = {'200': 0, '301': 0, '400': 0, '401': 0,
+         '403': 0, '404': 0, '405': 0, '500': 0}
+size = 0
 
-def print_stats(total_size, status_counts):
-    """Print statistics"""
-    print(f"File size: {total_size}")
-    for status_code in sorted(status_counts.keys()):
-        print(f"{status_code}: {status_counts[status_code]}")
+def print_info():
+    """print method printsinforamtion
+    Arguments:
+        codes (dict): code status
+        size (int): size of files
+    """
+    print("File size: {}".format(size))
+    for key, val in sorted(codes.items()):
+        if val > 0:
+            print("{}: {}".format(key, val))
 
-def main():
-    """Main function"""
-    total_size = 0
-    status_counts = {200: 0, 301: 0, 400: 0, 401: 0, 403: 0, 404: 0, 405: 0, 500: 0}
-    line_count = 0
-
-    log_pattern = re.compile(r'^(\d+\.\d+\.\d+\.\d+) - \[([^\]]+)\] "GET /projects/260 HTTP/1.1" (\d{3}) (\d+)$')
-
+if __name__ == '__main__':
     try:
-        for line in sys.stdin:
-            match = log_pattern.match(line)
-            if match:
-                status_code = int(match.group(3))
-                file_size = int(match.group(4))
-                
-                if status_code in status_counts:
-                    status_counts[status_code] += 1
-                
-                total_size += file_size
-                line_count += 1
-
-                if line_count % 10 == 0:
-                    print_stats(total_size, status_counts)
-            
+        for i, line in enumerate(stdin, 1):
+            try:
+                info = line.split()
+                size += int(info[-1])
+                if info[-2] in codes.keys():
+                    codes[info[-2]] += 1
+            except Exception:
+                pass
+            if not i % 10:
+                print_info()
     except KeyboardInterrupt:
-        print_stats(total_size, status_counts)
-        sys.exit(0)
-
-if __name__ == "__main__":
-    main()
+        print_info()
+        raise
+    print_info()
