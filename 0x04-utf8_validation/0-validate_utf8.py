@@ -1,6 +1,9 @@
 #!/usr/bin/python3
+""" determines if a given data set represents a valid UTF-8 encoding."""
+
 
 def validUTF8(data):
+    """ valid UTF-8 encoding"""
     n_bytes = 0
 
     for num in data:
@@ -23,5 +26,6 @@ def validUTF8(data):
                 return False
             n_bytes -= 1
 
-    # If n_bytes is not zero, then we were expecting more bytes to complete a character
+    # If n_bytes is not zero, then we were expecting
+    # more bytes to complete a character
     return n_bytes == 0
